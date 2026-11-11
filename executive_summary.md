@@ -1,28 +1,35 @@
-# Executive Summary: BERT-Family Model Sourcing Brief
+# Executive Summary: BERT Family Model Sourcing Brief
 
-## Hub Account
-Our team's Hugging Face access is tied to the account **@lhz7891444** (user account, write-role personal access token). All stats below were pulled live from the Hugging Face Hub on the date of this brief.
+**Prepared for:** Platform Review (due Friday)
+**Source of team Hugging Face access:** @lhz7891444 (Hugging Face account ID: 68805cebc41d25c21ef2183e, user-type account, personal access token with write role)
 
 ## Incumbent Model
+
 - **Model:** google-bert/bert-base-uncased
-- **Downloads (all-time):** 3,291.4M (~3.29 billion)
-- **Likes:** 3,066
+- **Downloads (as returned right now):** 3,292.5M (~3.29B all-time downloads)
+- **Likes:** 3,067
+- **Verification query result:** row count of 4 in the warehouse table (1 incumbent + 3 candidates)
 
-## Candidate Shortlist (3 most-downloaded BERT-family models, excluding the incumbent)
-1. **google-bert/bert-base-cased** — 334.5M downloads, 398 likes
-2. **google-bert/bert-base-multilingual-cased** — 263.0M downloads, 623 likes
-3. **google-bert/bert-base-multilingual-uncased** — 124.1M downloads, 177 likes
+## Candidate Shortlist (other BERT-family models on the Hub)
 
-All three candidates are official google-bert community models (fill-mask, BERT architecture, Apache-2.0 license).
+| Model Identifier | Downloads | Likes |
+|---|---|---|
+| google-bert/bert-base-cased | 334.6M | 398 |
+| google-bert/bert-base-multilingual-cased | 263.1M | 623 |
+| google-bert/bert-base-multilingual-uncased | 124.1M | 177 |
 
 ## Deliverables
-- **Written brief:** model_sourcing_brief.docx (saved in the team workspace, /tmp/mcp_ws/)
-- **Snowflake warehouse table:** MODEL_SOURCING_DB.EVALUATION.MODEL_SHORTLIST
-  - Columns: MODEL_ID, DOWNLOADS, LIKES, AS_OF
-  - Loaded rows: 4 (incumbent + 3 candidates)
-  - Verification query returned ROW_COUNT = 4 — confirmed.
 
-## Next Steps
-- Evaluate the three candidates against launch requirements and select a replacement or complement for google-bert/bert-base-uncased before the platform review deadline.
-- Refresh the Snowflake table (MODEL_SOURCING_DB.EVALUATION.MODEL_SHORTLIST) on a weekly cadence to keep downloads/likes current with the Hub.
-- Circulate this brief and model_sourcing_brief.docx to the platform review committee, crediting @lhz7891444 for source attribution.
+1. **Word brief:** `model_sourcing_brief.docx` (saved at /tmp/mcp_ws/model_sourcing_brief.docx)
+   - Title: "Model Sourcing Brief"
+   - Sections: Incumbent Model (with the statement "Our current production model is google-bert/bert-base-uncased."), Candidate Shortlist (with a 3-row table of identifier/downloads/likes), Warehouse Record, and Next Steps (3 bullets)
+2. **Snowflake warehouse record:** fully qualified table path `BERT_MODEL_SOURCING.eval.bert_model_shortlist`
+   - Columns: model_id, downloads, likes, role, loaded_at
+   - 4 rows loaded (verified via SELECT COUNT(*) → 4), one per shortlisted model plus one for the incumbent
+
+## Recommendation
+
+The three google-bert family candidates all have strong Hub traction. bert-base-cased leads on downloads (334.6M) and is a drop-in case-sensitive alternative; bert-base-multilingual-cased has the highest like count (623) and broadest language coverage. Recommend validating them against our search stack latency/quality benchmarks before committing.
+
+---
+*Posted as executive summary for the platform review. Original brief: model_sourcing_brief.docx | Warehouse table: BERT_MODEL_SOURCING.eval.bert_model_shortlist | HF account: @lhz7891444*
